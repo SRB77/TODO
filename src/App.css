@@ -76,27 +76,35 @@
 }
 li{
   background-color: aliceblue;
-  height: 15%;
+  height: auto;
   width: 80%;
   display: flex;
+  gap: 4% ;
   justify-content: space-between;
   align-items: center;
   padding-left: 1em;
   padding-right: 1em;
   border: none;
+  padding: 1em;
   border-radius: 9px;
   font-size: larger;
   font-weight: bold;
 }
 li button{
   height: 70%;
-  width: 20%;
+  width: auto;
   background-color: orange;
   border: none;
   border-radius: 5px;
   font-weight: bold;
+  font-size: medium;
+  padding: 8px;
 }
 li button:hover{
   cursor: pointer;
   transform: scale(0.95);
+}
+.checkBox{
+  height: 50%;
+  width: 20%;
 }

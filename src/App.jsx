@@ -6,7 +6,7 @@ const App = () => {
   //* React variable means State to store current Value and List of todos
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
-
+  const [check,setCheck] = useState(false);
   
   useEffect(()=>{
     const storedTasks = JSON.parse(localStorage.getItem("taskList")) || [];
@@ -18,7 +18,17 @@ const App = () => {
     localStorage.setItem("taskList",JSON.stringify(taskList));
   },[taskList])
 
+  //* handling CheckBox functions . 
 
+  const handleCheck = ()=>{
+    if(check){
+      setCheck(false)
+      console.log(`If Chcek :${check}`);
+    }else{
+      setCheck(true)
+      console.log(`Else check : ${check}`);
+    } 
+  }
 
   //* Function for handling the Click of ADD btn .
   const handleClick = (event) => {
@@ -64,7 +74,8 @@ const App = () => {
           {taskList.map((todoList, index) => {
             return (
               <li key={index}>
-                {todoList}{" "}
+                {todoList}
+                <input type="checkbox" className="checkBox" onClick={handleCheck}/>
                 <button onClick={() => delButton(index)}>Delete</button>
               </li>
             );
