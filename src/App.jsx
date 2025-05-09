@@ -1,11 +1,24 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./App.css";
 const App = () => {
   //* React variable means State to store current Value and List of todos
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
+
+  
+  useEffect(()=>{
+    const storedTasks = JSON.parse(localStorage.getItem("taskList")) || [];
+    setTaskList(storedTasks);
+  },[])
+
+  
+  useEffect(()=>{
+    localStorage.setItem("taskList",JSON.stringify(taskList));
+  },[taskList])
+
+
 
   //* Function for handling the Click of ADD btn .
   const handleClick = (event) => {
@@ -25,8 +38,8 @@ const App = () => {
 
   //* Function for handling the keyPress of ADD btn .
   const delButton = (indexDel) => {
-    const updateAftDel = taskList.filter((_,index)=> index !== indexDel );
-    setTaskList(updateAftDel)
+    const updateAftDel = taskList.filter((_, index) => index !== indexDel);
+    setTaskList(updateAftDel);
   };
 
   return (
@@ -51,7 +64,8 @@ const App = () => {
           {taskList.map((todoList, index) => {
             return (
               <li key={index}>
-                {todoList} <button onClick={() => delButton(index)}>Delete</button>
+                {todoList}{" "}
+                <button onClick={() => delButton(index)}>Delete</button>
               </li>
             );
           })}
