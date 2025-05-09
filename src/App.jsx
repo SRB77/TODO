@@ -7,12 +7,27 @@ const App = () => {
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
 
-  //* Function for handling the Click of ADD btn . 
-  const handleClick = ()=>{
-    if(task.trim() === "") return;
-    else setTaskList([...taskList , task]);
-    setTask("")
-  }
+  //* Function for handling the Click of ADD btn .
+  const handleClick = (event) => {
+    if (task.trim() === "") return;
+    else setTaskList([...taskList, task]);
+    setTask("");
+  };
+
+  //* Function for handling the keyPress of ADD btn .
+  const keyHandle = (event) => {
+    if (event.key == "Enter") {
+      if (task.trim() === "") return;
+      else setTaskList([...taskList, task]);
+      setTask("");
+    }
+  };
+
+  //* Function for handling the keyPress of ADD btn .
+  const delButton = (indexDel) => {
+    const updateAftDel = taskList.filter((_,index)=> index !== indexDel );
+    setTaskList(updateAftDel)
+  };
 
   return (
     <div className="main">
@@ -23,20 +38,23 @@ const App = () => {
             placeholder="ENTER YOUR TASK HERE"
             className="input_box"
             value={task}
-            onChange={(e)=>{
-              setTask(e.target.value)
+            onChange={(e) => {
+              setTask(e.target.value);
             }}
+            onKeyDown={keyHandle}
           />
-          <button className="addBtn" onClick={handleClick}>ADD</button>
+          <button className="addBtn" onClick={handleClick}>
+            ADD
+          </button>
         </div>
         <div className="tasks_area">
-            {
-              taskList.map((todoList,index)=>{
-                return(
-                  <li key={index}>{todoList} <button>Delete</button></li>
-                )
-              })
-            }
+          {taskList.map((todoList, index) => {
+            return (
+              <li key={index}>
+                {todoList} <button onClick={() => delButton(index)}>Delete</button>
+              </li>
+            );
+          })}
         </div>
       </div>
     </div>
