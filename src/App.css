@@ -62,17 +62,18 @@
   transform: scale(0.95);
 }
 .tasks_area{
-    height: 60%;
+    height: 70%;
     width: 86%;
     background-color: rgb(59, 95, 126);
     display: flex;
     flex-direction: column;
     gap: 4%;
-    margin-top: 5%;
-    justify-content: center;
+    margin-top: 20px;
     align-items: center;
     border-radius: 5px;
-    overflow: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    overflow:scroll
 }
 li{
   background-color: aliceblue;
@@ -91,7 +92,7 @@ li{
   font-weight: bold;
 }
 li button{
-  height: 70%;
+  height: auto;
   width: auto;
   background-color: orange;
   border: none;
@@ -104,7 +105,15 @@ li button:hover{
   cursor: pointer;
   transform: scale(0.95);
 }
-.checkBox{
-  height: 50%;
-  width: 20%;
+
+.extra-on-list{
+  display: flex;
+  gap:1em;
+  height: 90%;
+  align-items: center;
+}
+.extra-on-list .checkBox{
+  height:20px;
+  width:30px;
+  accent-color: green;
 }

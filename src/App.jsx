@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./App.css";
 const App = () => {
   //* React variable means State to store current Value and List of todos
-  const [task, setTask] = useState("");
+  const [content, setContent] = useState("");
   const [taskList, setTaskList] = useState([]);
   const [check,setCheck] = useState(false);
   
@@ -15,38 +15,41 @@ const App = () => {
 
   
   useEffect(()=>{
-    localStorage.setItem("taskList",JSON.stringify(taskList));
+    localStorage.setItem("taskList", JSON.stringify(taskList));
   },[taskList])
 
   //* handling CheckBox functions . 
-
   const handleCheck = ()=>{
     if(check){
       setCheck(false)
-      console.log(`If Chcek :${check}`);
     }else{
       setCheck(true)
-      console.log(`Else check : ${check}`);
     } 
   }
 
   //* Function for handling the Click of ADD btn .
-  const handleClick = (event) => {
-    if (task.trim() === "") return;
-    else setTaskList([...taskList, task]);
-    setTask("");
-  };
-
-  //* Function for handling the keyPress of ADD btn .
-  const keyHandle = (event) => {
-    if (event.key == "Enter") {
-      if (task.trim() === "") return;
-      else setTaskList([...taskList, task]);
-      setTask("");
+  const handleClick = () => {
+    if (content.trim() === "") return;
+    else {
+      let newTask = {content:content,id:Date.now(),isCompleted:check};
+      setTaskList([...taskList, newTask]);
+      setContent("");
     }
   };
 
-  //* Function for handling the keyPress of ADD btn .
+//* Function for handling the keyPress of ADD btn .
+  const keyHandle = (event) => {
+    if (event.key == "Enter") {
+      if (content.trim() === "") return;
+      else {
+        let newTask = { content: content, id: Date.now(), isCompleted: check };
+        setTaskList([...taskList, newTask]);
+        setContent("");
+      }
+    }
+  };
+
+  //* Function for handling the Delete button .
   const delButton = (indexDel) => {
     const updateAftDel = taskList.filter((_, index) => index !== indexDel);
     setTaskList(updateAftDel);
@@ -60,9 +63,9 @@ const App = () => {
             type="text"
             placeholder="ENTER YOUR TASK HERE"
             className="input_box"
-            value={task}
+            value={content}
             onChange={(e) => {
-              setTask(e.target.value);
+              setContent(e.target.value);
             }}
             onKeyDown={keyHandle}
           />
@@ -74,9 +77,11 @@ const App = () => {
           {taskList.map((todoList, index) => {
             return (
               <li key={index}>
-                {todoList}
-                <input type="checkbox" className="checkBox" onClick={handleCheck}/>
-                <button onClick={() => delButton(index)}>Delete</button>
+                {todoList.content}
+                <div className="extra-on-list">
+                  <input type="checkbox" className="checkBox" onChange={handleCheck} />
+                  <button onClick={() => delButton(index)}>Delete</button>
+                </div>
               </li>
             );
           })}
